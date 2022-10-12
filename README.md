@@ -1,4 +1,4 @@
-# Kanye Rust
+# [Kanye Rust](https://kanye-rust.shuttleapp.rs/)
 
 Like [Kanye.Rest](https://kanye.rest/), but it's written in Rust.
 
