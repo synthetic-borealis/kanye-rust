@@ -1,3 +1,25 @@
+use rocket::serde::Serialize;
+
+#[derive(Serialize)]
+#[serde(crate = "rocket::serde")]
+pub struct Quote {
+    quote: &'static str,
+}
+
+impl Quote {
+    pub fn new() -> Self {
+        Self {
+            quote: get_random_quote(),
+        }
+    }
+}
+
+impl Default for Quote {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 pub fn get_random_quote() -> &'static str {
     let quotes = [
         "2024",

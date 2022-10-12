@@ -1,23 +1,24 @@
-use rocket::serde::Serialize;
+#[macro_use]
+extern crate rocket;
 
-pub mod quote_list;
+use crate::quotes::*;
+use rocket::serde::json::Json;
 
-#[derive(Serialize)]
-#[serde(crate = "rocket::serde")]
-pub struct Quote {
-    quote: &'static str,
+mod quotes;
+
+#[get("/text")]
+fn text() -> &'static str {
+    get_random_quote()
 }
 
-impl Quote {
-    pub fn new() -> Self {
-        Self {
-            quote: quote_list::get_random_quote(),
-        }
-    }
+#[get("/")]
+fn index() -> Json<Quote> {
+    Json(Quote::new())
 }
 
-impl Default for Quote {
-    fn default() -> Self {
-        Self::new()
-    }
+#[shuttle_service::main]
+async fn rocket() -> shuttle_service::ShuttleRocket {
+    let rocket = rocket::build().mount("/", routes![index, text]);
+
+    Ok(rocket)
 }
