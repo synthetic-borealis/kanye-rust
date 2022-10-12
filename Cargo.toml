@@ -1,7 +1,10 @@
 [package]
 name = "kanye-rust"
+description = "A random Kanye West quote generator"
 version = "0.1.0"
 edition = "2021"
+license = "MIT"
+repository = "https://github.com/synthetic-borealis/kanye-rust/"
 
 [lib]
 
