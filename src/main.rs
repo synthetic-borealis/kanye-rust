@@ -1,9 +1,11 @@
 #[macro_use]
 extern crate rocket;
 
-use kanye_rust::{cors, quotes};
+use std::net::Ipv4Addr;
+use rocket::Config;
 use rocket::routes;
 use rocket::serde::json::Json;
+use kanye_rust::{cors, quotes};
 
 #[get("/text")]
 fn text() -> &'static str {
@@ -16,8 +18,12 @@ fn index() -> Json<quotes::Quote> {
 }
 
 #[launch]
-fn rocket() -> _ {
-    rocket::build()
+fn rocket() -> rocket::Rocket<rocket::Build> {
+    let config = Config {
+        address: Ipv4Addr::new(0, 0, 0, 0).into(),
+        ..Config::default()
+    };
+    rocket::custom(&config)
         .attach(cors::Cors)
         .mount("/", routes![index, text])
 }
